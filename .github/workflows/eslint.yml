@@ -5,36 +5,43 @@ on: [push, pull_request]
 jobs:
   eslint:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
       - name: Cache Node.js modules
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: ${{ runner.os }}-node-modules
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      - name: Install Node.js dependencies
+      - name: Install Dependencies
         run: npm install
+
+      - name: Install ESLint SARIF Formatter
+        run: npm install --save-dev @microsoft/eslint-formatter-sarif
 
       - name: Create reports directory
         run: mkdir -p reports
 
-      - name: Install ESLint SARIF Formatter
-        run: npm install @microsoft/eslint-formatter-sarif --save-dev
-
-      - name: Run ESLint with SARIF output
+      - name: Run ESLint
         run: |
-            mkdir -p reports
-            npx eslint . --format @microsoft/eslint-formatter-sarif --output-file reports/eslint-results.sarif
-        continue-on-error: true
+          npx eslint . \
+            --format @microsoft/eslint-formatter-sarif \
+            --output-file reports/eslint-results.sarif || true
 
-      - name: Debug ESLint Output
-        run: cat reports/eslint-results.sarif || echo "No SARIF report generated"
+      - name: Debug: Show SARIF content
+        run: cat reports/eslint-results.sarif || echo "No SARIF file found"
 
-      - name: Upload SARIF report
+      - name: Upload SARIF to GitHub
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: reports/eslint-results.sarif
