@@ -38,7 +38,7 @@ jobs:
             --format @microsoft/eslint-formatter-sarif \
             --output-file reports/eslint-results.sarif || true
 
-      - name: Debug: Show SARIF content
+      - name: Show SARIF content
         run: cat reports/eslint-results.sarif || echo "No SARIF file found"
 
       - name: Upload SARIF to GitHub
