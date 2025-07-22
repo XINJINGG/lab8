@@ -9,11 +9,13 @@
           "informationUri": "https://eslint.org",
           "rules": [
             {
-              "id": "no-unused-vars",
-              "helpUri": "https://eslint.org/docs/latest/rules/no-unused-vars",
-              "properties": {},
+              "id": "security/detect-eval-with-expression",
+              "helpUri": "https://github.com/eslint-community/eslint-plugin-security/blob/main/docs/rules/detect-eval-with-expression.md",
+              "properties": {
+                "category": "Possible Security Vulnerability"
+              },
               "shortDescription": {
-                "text": "Disallow unused variables"
+                "text": "Detects \"eval(variable)\" which can allow an attacker to run arbitrary code inside your process."
               }
             }
           ],
@@ -21,11 +23,6 @@
         }
       },
       "artifacts": [
-        {
-          "location": {
-            "uri": "file:///C:/Users/Xinji/docker-test/Lab08-requiredfiles/eslint.config.mjs"
-          }
-        },
         {
           "location": {
             "uri": "file:///C:/Users/Xinji/docker-test/Lab08-requiredfiles/test.js"
@@ -36,25 +33,25 @@
         {
           "level": "error",
           "message": {
-            "text": "'unused' is assigned a value but never used."
+            "text": "eval with argument of type TemplateLiteral"
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
                   "uri": "file:///C:/Users/Xinji/docker-test/Lab08-requiredfiles/test.js",
-                  "index": 1
+                  "index": 0
                 },
                 "region": {
-                  "startLine": 1,
-                  "startColumn": 7,
-                  "endLine": 1,
-                  "endColumn": 13
+                  "startLine": 2,
+                  "startColumn": 1,
+                  "endLine": 2,
+                  "endColumn": 35
                 }
               }
             }
           ],
-          "ruleId": "no-unused-vars",
+          "ruleId": "security/detect-eval-with-expression",
           "ruleIndex": 0
         }
       ]

@@ -1,30 +1,21 @@
-import js from "@eslint/js";
 import globals from "globals";
-import { defineConfig } from "eslint/config";
-
-
-export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs}"], plugins: { js }, extends: ["js/recommended"] },
-  { files: ["**/*.{js,mjs,cjs}"], languageOptions: { globals: {...globals.browser, ...globals.node} } },
-]);
-
-// import js from "@eslint/js";
-// import globals from "globals";
-// import { defineConfig } from "eslint/config";
-
-// export default defineConfig([
-//   {
-//     files: ["**/*.{js,mjs,cjs}"],
-//     ...js.configs.recommended, // brings in "rules", "languageOptions", etc.
-//     languageOptions: {
-//       globals: { ...globals.browser, ...globals.node },
-//     },
-//     rules: {
-//       "no-unused-vars": "warn",
-//       "semi": ["error", "always"],
-//       "eqeqeq": "error",
-//       "no-console": "warn",
-//       "no-var": "error",
-//     },
-//   },
-// ]);
+import pluginJs from "@eslint/js";
+import pluginReact from "eslint-plugin-react";
+import pluginSecurity from "eslint-plugin-security";
+/** @type {import('eslint').Linter.Config[]} */
+export default [
+  { files: ["**/*.{js,mjs,cjs,jsx}"] },
+  { languageOptions: { globals: globals.browser } },
+  pluginJs.configs.recommended,
+  pluginReact.configs.flat.recommended,
+  {
+    plugins: {
+      security: pluginSecurity
+    },
+    rules: {
+      ...pluginJs.configs.recommended.rules,
+      ...pluginReact.configs.flat.recommended.rules,
+      "security/detect-eval-with-expression": "error",
+    }
+  }
+];
