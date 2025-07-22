@@ -1,0 +1,63 @@
+{
+  "version": "2.1.0",
+  "$schema": "http://json.schemastore.org/sarif-2.1.0-rtm.5",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "ESLint",
+          "informationUri": "https://eslint.org",
+          "rules": [
+            {
+              "id": "no-unused-vars",
+              "helpUri": "https://eslint.org/docs/latest/rules/no-unused-vars",
+              "properties": {},
+              "shortDescription": {
+                "text": "Disallow unused variables"
+              }
+            }
+          ],
+          "version": "9.31.0"
+        }
+      },
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/Users/Xinji/docker-test/Lab08-requiredfiles/eslint.config.mjs"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/Users/Xinji/docker-test/Lab08-requiredfiles/test.js"
+          }
+        }
+      ],
+      "results": [
+        {
+          "level": "error",
+          "message": {
+            "text": "'unused' is assigned a value but never used."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/Xinji/docker-test/Lab08-requiredfiles/test.js",
+                  "index": 1
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 7,
+                  "endLine": 1,
+                  "endColumn": 13
+                }
+              }
+            }
+          ],
+          "ruleId": "no-unused-vars",
+          "ruleIndex": 0
+        }
+      ]
+    }
+  ]
+}
